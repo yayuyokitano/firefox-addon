@@ -1,11 +1,22 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Firefox Addon Action'
+description: 'Upload your addon to the Firefox addon store'
+author: 'yayuyokitano'
 inputs:
-  milliseconds: # change this
+  guid: 
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'The GUID of your addon'
+  api_key: 
+    required: true
+    description: 'API key to authenticate with'
+  api_secret: 
+    required: true
+    description: 'API secret to authenticate with'
+  xpi_path: 
+    required: true
+    description: 'The path to your XPI file to upload'
+  src_path: 
+    required: true
+    description: 'The path to your XPI file to upload'
 runs:
   using: 'node16'
   main: 'dist/index.js'
