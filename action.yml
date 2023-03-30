@@ -8,10 +8,10 @@ inputs:
   xpi:
     required: true
     description: 'path to xpi file'
-  api-key:
+  api_key:
     required: true
     description: 'api key for AMO'
-  api-secret:
+  api_secret:
     required: true
     description: 'api secret for AMO'
   src:
