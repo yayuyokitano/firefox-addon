@@ -1,6 +1,6 @@
 {
   "name": "@yayuyokitano/firefox-addon",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "private": true,
   "description": "Github action to upload firefox addon",
   "main": "lib/main.js",
