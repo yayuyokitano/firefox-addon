@@ -12,11 +12,11 @@ It is used in [web scrobbler](https://github.com/yayuyokitano/web-scrobbler/blob
 steps:
   - uses: yayuyokitano/firefox-addon@v0.0.1-alpha
     with:
-      api-key: ${{ secrets.AMO_ISSUER }}
-      api-secret: ${{ secrets.AMO_SECRET }}
+      api_key: ${{ secrets.AMO_ISSUER }}
+      api_secret: ${{ secrets.AMO_SECRET }}
       guid: '{799c0914-748b-41df-a25c-22d008f9e83f}'
-      xpi: web-scrobbler-firefox.zip
-      src: web-scrobbler-src.zip # Optional
+      xpi_path: web-scrobbler-firefox.zip
+      src_path: web-scrobbler-src.zip # Optional
 ```
 
 ## Credentials
