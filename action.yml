@@ -1,11 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: '@yayuyokitano/firefox-addon'
+description: 'Github action to upload firefox addon.'
+author: 'yayuyokitano'
 inputs:
-  milliseconds: # change this
+  guid:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'uuid of extension to update'
+  xpi:
+    required: true
+    description: 'path to xpi file'
+  api-key:
+    required: true
+    description: 'api key for AMO'
+  api-secret:
+    required: true
+    description: 'api secret for AMO'
+  src:
+    description: 'path to src zip file for verification. To be used if your extension uses minification, or other build steps that make it difficult to read the code of the xpi.'
 runs:
   using: 'node16'
   main: 'dist/index.js'
