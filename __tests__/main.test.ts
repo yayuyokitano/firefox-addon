@@ -7,8 +7,8 @@ import {expect, test} from '@jest/globals'
 test('this test is a stub and will not run in github, but test manually with credentials please', () => {
   return
   process.env['INPUT_GUID'] = ''
-  process.env['INPUT_API-KEY'] = ''
-  process.env['INPUT_API-SECRET'] = ''
+  process.env['INPUT_API_KEY'] = ''
+  process.env['INPUT_API_SECRET'] = ''
   process.env['INPUT_XPI'] = ''
   process.env['INPUT_SRC'] = ''
   const np = process.execPath

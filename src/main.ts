@@ -5,10 +5,17 @@ import {createUpload, tryUpdateExtension} from './request'
 async function run(): Promise<void> {
   try {
     const guid = core.getInput('guid', {required: true})
+<<<<<<< HEAD
     const xpiPath = core.getInput('xpi_path', {required: true})
     const key = core.getInput('api_key', {required: true})
     const secret = core.getInput('api_secret', {required: true})
     const srcPath = core.getInput('src_path')
+=======
+    const xpiPath = core.getInput('xpi', {required: true})
+    const key = core.getInput('api_key', {required: true})
+    const secret = core.getInput('api_secret', {required: true})
+    const src = core.getInput('src')
+>>>>>>> main
 
     const token = generateJWT(key, secret)
     const uploadDetails = await createUpload(xpiPath, token)

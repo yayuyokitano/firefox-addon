@@ -47,8 +47,8 @@ function run() {
         try {
             const guid = core.getInput('guid', { required: true });
             const xpiPath = core.getInput('xpi', { required: true });
-            const key = core.getInput('api-key', { required: true });
-            const secret = core.getInput('api-secret', { required: true });
+            const key = core.getInput('api_key', { required: true });
+            const secret = core.getInput('api_secret', { required: true });
             const src = core.getInput('src');
             const token = (0, util_1.generateJWT)(key, secret);
             const uploadDetails = yield (0, request_1.createUpload)(xpiPath, token);

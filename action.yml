@@ -1,22 +1,21 @@
-name: 'Firefox Addon Action'
-description: 'Upload your addon to the Firefox addon store'
+name: 'yayuyokitano/firefox-addon'
+description: 'Github action to upload firefox addon.'
 author: 'yayuyokitano'
 inputs:
-  guid: 
+  guid:
     required: true
-    description: 'The GUID of your addon'
-  api_key: 
+    description: 'uuid of extension to update'
+  xpi_path:
     required: true
-    description: 'API key to authenticate with'
-  api_secret: 
+    description: 'path to XPI file'
+  api_key:
     required: true
-    description: 'API secret to authenticate with'
-  xpi_path: 
+    description: 'API key for AMO'
+  api_secret:
     required: true
-    description: 'The path to your XPI file to upload'
-  src_path: 
-    required: true
-    description: 'The path to your XPI file to upload'
+    description: 'API secret for AMO'
+  src_path:
+    description: 'path to src zip file for verification. To be used if your extension uses minification, or other build steps that make it difficult to read the code of the xpi.'
 runs:
   using: 'node16'
   main: 'dist/index.js'
