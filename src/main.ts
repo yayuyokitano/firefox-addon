@@ -1,18 +1,28 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {generateJWT} from './util'
+import {createUpload, tryUpdateExtension} from './request'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const guid = core.getInput('guid', {required: true})
+    const xpiPath = core.getInput('xpi', {required: true})
+    const key = core.getInput('api-key', {required: true})
+    const secret = core.getInput('api-secret', {required: true})
+    const src = core.getInput('src')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const token = generateJWT(key, secret)
+    const uploadDetails = await createUpload(xpiPath, token)
 
-    core.setOutput('time', new Date().toTimeString())
+    const timeout = setTimeout(async () => {
+      if (await tryUpdateExtension(guid, uploadDetails.uuid, token, src)) {
+        clearTimeout(timeout)
+      }
+    }, 5000)
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    if (error instanceof Error) {
+      core.debug(error.message)
+      //core.setFailed(error.message)
+    }
   }
 }
 

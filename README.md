@@ -1,3 +1,8 @@
+This is a github action that allows you to publish to firefox.
+Currently it only supports updating an existing addon, not creating a new one.
+It supports supplying source code.
+It is used in [web scrobbler](https://github.com/yayuyokitano/web-scrobbler/blob/master/.github/workflows/deploy.yml), see that for example usage.
+
 <p align="center">
   <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
 </p>
