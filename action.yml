@@ -5,16 +5,16 @@ inputs:
   guid:
     required: true
     description: 'uuid of extension to update'
-  xpi:
+  xpi_path:
     required: true
-    description: 'path to xpi file'
+    description: 'path to XPI file'
   api_key:
     required: true
-    description: 'api key for AMO'
+    description: 'API key for AMO'
   api_secret:
     required: true
-    description: 'api secret for AMO'
-  src:
+    description: 'API secret for AMO'
+  src_path:
     description: 'path to src zip file for verification. To be used if your extension uses minification, or other build steps that make it difficult to read the code of the xpi.'
 runs:
   using: 'node16'

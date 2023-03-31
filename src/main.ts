@@ -5,16 +5,16 @@ import {createUpload, tryUpdateExtension} from './request'
 async function run(): Promise<void> {
   try {
     const guid = core.getInput('guid', {required: true})
-    const xpiPath = core.getInput('xpi', {required: true})
+    const xpiPath = core.getInput('xpi_path', {required: true})
     const key = core.getInput('api_key', {required: true})
     const secret = core.getInput('api_secret', {required: true})
-    const src = core.getInput('src')
+    const srcPath = core.getInput('src_path')
 
     const token = generateJWT(key, secret)
     const uploadDetails = await createUpload(xpiPath, token)
 
     const timeout = setTimeout(async () => {
-      if (await tryUpdateExtension(guid, uploadDetails.uuid, token, src)) {
+      if (await tryUpdateExtension(guid, uploadDetails.uuid, token, srcPath)) {
         clearTimeout(timeout)
       }
     }, 5000)

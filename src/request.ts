@@ -29,7 +29,7 @@ export async function tryUpdateExtension(
   guid: string,
   uuid: string,
   token: string,
-  src?: string
+  srcPath?: string
 ): Promise<boolean> {
   const details = await getUploadDetails(uuid, token)
   if (!details.valid) {
@@ -39,8 +39,8 @@ export async function tryUpdateExtension(
   const url = `${baseURL}/addons/addon/${guid}/versions/`
   const body = new FormData()
   body.append('upload', uuid)
-  if (src) {
-    body.append('source', createReadStream(resolve(src)))
+  if (srcPath) {
+    body.append('source', createReadStream(resolve(srcPath)))
   }
 
   const response = await axios.post(url, body, {
