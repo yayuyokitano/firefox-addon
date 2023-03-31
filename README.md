@@ -10,7 +10,7 @@ It is used in [web scrobbler](https://github.com/yayuyokitano/web-scrobbler/blob
 
 ```yaml
 steps:
-  - uses: yayuyokitano/firefox-addon@v0.0.1-alpha
+  - uses: yayuyokitano/firefox-addon@v0.0.2-alpha
     with:
       api_key: ${{ secrets.AMO_ISSUER }}
       api_secret: ${{ secrets.AMO_SECRET }}
