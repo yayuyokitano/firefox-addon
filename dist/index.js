@@ -46,14 +46,14 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const guid = core.getInput('guid', { required: true });
-            const xpiPath = core.getInput('xpi', { required: true });
+            const xpiPath = core.getInput('xpi_path', { required: true });
             const key = core.getInput('api_key', { required: true });
             const secret = core.getInput('api_secret', { required: true });
-            const src = core.getInput('src');
+            const srcPath = core.getInput('src_path');
             const token = (0, util_1.generateJWT)(key, secret);
             const uploadDetails = yield (0, request_1.createUpload)(xpiPath, token);
             const timeout = setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                if (yield (0, request_1.tryUpdateExtension)(guid, uploadDetails.uuid, token, src)) {
+                if (yield (0, request_1.tryUpdateExtension)(guid, uploadDetails.uuid, token, srcPath)) {
                     clearTimeout(timeout);
                 }
             }), 5000);
@@ -133,7 +133,7 @@ function createUpload(xpiPath, token) {
     });
 }
 exports.createUpload = createUpload;
-function tryUpdateExtension(guid, uuid, token, src) {
+function tryUpdateExtension(guid, uuid, token, srcPath) {
     return __awaiter(this, void 0, void 0, function* () {
         const details = yield getUploadDetails(uuid, token);
         if (!details.valid) {
@@ -142,8 +142,8 @@ function tryUpdateExtension(guid, uuid, token, src) {
         const url = `${util_1.baseURL}/addons/addon/${guid}/versions/`;
         const body = new form_data_1.default();
         body.append('upload', uuid);
-        if (src) {
-            body.append('source', (0, fs_1.createReadStream)((0, path_1.resolve)(src)));
+        if (srcPath) {
+            body.append('source', (0, fs_1.createReadStream)((0, path_1.resolve)(srcPath)));
         }
         const response = yield axios_1.default.post(url, body, {
             headers: Object.assign(Object.assign({}, body.getHeaders()), { Authorization: `JWT ${token}` })

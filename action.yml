@@ -1,4 +1,4 @@
-name: 'yayuyokitano/firefox-addon'
+name: 'Firefox Addon Action'
 description: 'Github action to upload firefox addon.'
 author: 'yayuyokitano'
 inputs:
