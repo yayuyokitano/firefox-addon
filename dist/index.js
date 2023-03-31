@@ -52,16 +52,21 @@ function run() {
             const srcPath = core.getInput('src_path');
             const token = (0, util_1.generateJWT)(key, secret);
             const uploadDetails = yield (0, request_1.createUpload)(xpiPath, token);
-            const timeout = setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                if (yield (0, request_1.tryUpdateExtension)(guid, uploadDetails.uuid, token, srcPath)) {
-                    clearTimeout(timeout);
+            const timeout = 10 * 60 * 1000;
+            const sleepTime = 5 * 1000;
+            const startTime = Date.now();
+            const interval = setInterval(() => __awaiter(this, void 0, void 0, function* () {
+                if (Date.now() - timeout > startTime) {
+                    throw new Error('Extension validation timed out');
                 }
-            }), 5000);
+                if (yield (0, request_1.tryUpdateExtension)(guid, uploadDetails.uuid, token, srcPath)) {
+                    clearInterval(interval);
+                }
+            }), sleepTime);
         }
         catch (error) {
             if (error instanceof Error) {
-                core.debug(error.message);
-                //core.setFailed(error.message)
+                core.setFailed(error.message);
             }
         }
     });

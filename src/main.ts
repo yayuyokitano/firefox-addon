@@ -13,15 +13,21 @@ async function run(): Promise<void> {
     const token = generateJWT(key, secret)
     const uploadDetails = await createUpload(xpiPath, token)
 
-    const timeout = setTimeout(async () => {
-      if (await tryUpdateExtension(guid, uploadDetails.uuid, token, srcPath)) {
-        clearTimeout(timeout)
+    const timeout = 10 * 60 * 1000
+    const sleepTime = 5 * 1000
+    const startTime = Date.now()
+
+    const interval = setInterval(async () => {
+      if (Date.now() - timeout > startTime) {
+        throw new Error('Extension validation timed out')
       }
-    }, 5000)
+      if (await tryUpdateExtension(guid, uploadDetails.uuid, token, srcPath)) {
+        clearInterval(interval)
+      }
+    }, sleepTime)
   } catch (error) {
     if (error instanceof Error) {
-      core.debug(error.message)
-      //core.setFailed(error.message)
+      core.setFailed(error.message)
     }
   }
 }
