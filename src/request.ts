@@ -43,9 +43,12 @@ export async function tryUpdateExtension(
   const body = new FormData()
   body.append('upload', uuid)
   if (srcPath) {
-    body.append('source', createReadStream(resolve(srcPath)))
+    const stream = createReadStream(resolve(srcPath))
+    core.debug(`Uploading ${srcPath}, length ${stream.readableLength}`)
+    body.append('source', stream)
   }
 
+  core.debug(`Updating extension ${guid} with ${uuid}`)
   const response = await axios.post(url, body, {
     headers: {
       ...body.getHeaders(),

@@ -150,8 +150,11 @@ function tryUpdateExtension(guid, uuid, token, srcPath) {
         const body = new form_data_1.default();
         body.append('upload', uuid);
         if (srcPath) {
-            body.append('source', (0, fs_1.createReadStream)((0, path_1.resolve)(srcPath)));
+            const stream = (0, fs_1.createReadStream)((0, path_1.resolve)(srcPath));
+            core.debug(`Uploading ${srcPath}, length ${stream.readableLength}`);
+            body.append('source', stream);
         }
+        core.debug(`Updating extension ${guid} with ${uuid}`);
         const response = yield axios_1.default.post(url, body, {
             headers: Object.assign(Object.assign({}, body.getHeaders()), { Authorization: `JWT ${token}` })
         });
