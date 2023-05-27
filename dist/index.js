@@ -65,8 +65,24 @@ function run() {
             }), sleepTime);
         }
         catch (error) {
+            if (typeof error === 'object' && error && 'response' in error) {
+                core.debug('Failed Request');
+                if (typeof error.response === 'object' &&
+                    error.response &&
+                    'status' in error.response) {
+                    core.debug(`Fail status: ${error.response.status}`);
+                }
+                if (typeof error.response === 'object' &&
+                    error.response &&
+                    'data' in error.response) {
+                    core.debug(`Fail data: ${JSON.stringify(error.response.data)}`);
+                }
+            }
             if (error instanceof Error) {
                 core.setFailed(error.message);
+            }
+            else {
+                core.setFailed('Unknown error. Try to rerun the job and check debug, there may be more information.');
             }
         }
     });
