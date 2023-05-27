@@ -144,9 +144,8 @@ function createUpload(xpiPath, token) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `${util_1.baseURL}/addons/upload/`;
         const body = new form_data_1.default();
-        const stream = (0, fs_1.createReadStream)((0, path_1.resolve)(xpiPath));
-        core.debug(`Uploading ${xpiPath}, length ${stream.readableLength}`);
-        body.append('upload', stream);
+        core.debug(`Uploading ${xpiPath}`);
+        body.append('upload', (0, fs_1.createReadStream)((0, path_1.resolve)(xpiPath)));
         body.append('channel', 'listed');
         const response = yield axios_1.default.post(url, body, {
             headers: Object.assign(Object.assign({}, body.getHeaders()), { Authorization: `JWT ${token}` })
@@ -166,9 +165,8 @@ function tryUpdateExtension(guid, uuid, token, srcPath) {
         const body = new form_data_1.default();
         body.append('upload', uuid);
         if (srcPath) {
-            const stream = (0, fs_1.createReadStream)((0, path_1.resolve)(srcPath));
-            core.debug(`Uploading ${srcPath}, length ${stream.readableLength}`);
-            body.append('source', stream);
+            core.debug(`Uploading ${srcPath}`);
+            body.append('source', (0, fs_1.createReadStream)((0, path_1.resolve)(srcPath)));
         }
         core.debug(`Updating extension ${guid} with ${uuid}`);
         const response = yield axios_1.default.post(url, body, {

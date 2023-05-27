@@ -12,10 +12,9 @@ export async function createUpload(
 ): Promise<InitialUploadDetails> {
   const url = `${baseURL}/addons/upload/`
   const body = new FormData()
-  const stream = createReadStream(resolve(xpiPath))
 
-  core.debug(`Uploading ${xpiPath}, length ${stream.readableLength}`)
-  body.append('upload', stream)
+  core.debug(`Uploading ${xpiPath}`)
+  body.append('upload', createReadStream(resolve(xpiPath)))
   body.append('channel', 'listed')
 
   const response = await axios.post(url, body, {
@@ -43,9 +42,8 @@ export async function tryUpdateExtension(
   const body = new FormData()
   body.append('upload', uuid)
   if (srcPath) {
-    const stream = createReadStream(resolve(srcPath))
-    core.debug(`Uploading ${srcPath}, length ${stream.readableLength}`)
-    body.append('source', stream)
+    core.debug(`Uploading ${srcPath}`)
+    body.append('source', createReadStream(resolve(srcPath)))
   }
 
   core.debug(`Updating extension ${guid} with ${uuid}`)
