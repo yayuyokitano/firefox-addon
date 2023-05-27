@@ -12,7 +12,10 @@ export async function createUpload(
 ): Promise<InitialUploadDetails> {
   const url = `${baseURL}/addons/upload/`
   const body = new FormData()
-  body.append('upload', createReadStream(resolve(xpiPath)))
+  const stream = createReadStream(resolve(xpiPath))
+
+  core.debug(`Uploading ${xpiPath}, length ${stream.readableLength}`)
+  body.append('upload', stream)
   body.append('channel', 'listed')
 
   const response = await axios.post(url, body, {

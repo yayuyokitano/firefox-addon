@@ -128,7 +128,9 @@ function createUpload(xpiPath, token) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `${util_1.baseURL}/addons/upload/`;
         const body = new form_data_1.default();
-        body.append('upload', (0, fs_1.createReadStream)((0, path_1.resolve)(xpiPath)));
+        const stream = (0, fs_1.createReadStream)((0, path_1.resolve)(xpiPath));
+        core.debug(`Uploading ${xpiPath}, length ${stream.readableLength}`);
+        body.append('upload', stream);
         body.append('channel', 'listed');
         const response = yield axios_1.default.post(url, body, {
             headers: Object.assign(Object.assign({}, body.getHeaders()), { Authorization: `JWT ${token}` })
