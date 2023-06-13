@@ -47,14 +47,21 @@ export async function tryUpdateExtension(
   }
 
   core.debug(`Updating extension ${guid} with ${uuid}`)
-  const response = await axios.post(url, body, {
-    headers: {
-      ...body.getHeaders(),
-      Authorization: `JWT ${token}`
+  try {
+    const response = await axios.post(url, body, {
+      headers: {
+        ...body.getHeaders(),
+        Authorization: `JWT ${token}`
+      }
+    })
+    core.debug(`Create version response: ${ JSON.stringify(response.data) }`)
+    return true
+  } catch(error) {
+    if (axios.isAxiosError(error)) {
+      core.error(`Error occurred when uploading extension: ${ JSON.stringify(error?.response?.data) }`)
     }
-  })
-  core.debug(`Create version response: ${JSON.stringify(response.data)}`)
-  return true
+    throw error
+  }
 }
 
 export async function getUploadDetails(
